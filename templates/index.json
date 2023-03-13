@@ -1,0 +1,521 @@
+{
+  "sections": {
+    "image-slideshow": {
+      "type": "image--slideshow",
+      "blocks": {
+        "slideshow-0": {
+          "type": "image",
+          "settings": {
+            "image": "shopify:\/\/shop_images\/4096x2048-mainbanner.jpg",
+            "mobile_image": "shopify:\/\/shop_images\/Cap_2022-11-19_14-41-09-640.jpg",
+            "title": "",
+            "text": "",
+            "button_label": "",
+            "button_link": "shopify:\/\/collections\/test-collection",
+            "caption-background": "rgba(0,0,0,0)",
+            "caption-text": "#ffffff",
+            "button-text": "#333333",
+            "button-background": "#ffffff",
+            "captionHorizontal": "right",
+            "captionAlignment": "right"
+          }
+        }
+      },
+      "block_order": [
+        "slideshow-0"
+      ],
+      "settings": {
+        "slider-animation": "slide",
+        "slider-width": "full-screen",
+        "vertical-alignment": true,
+        "text-below-image": true,
+        "slider-slide-time": 5,
+        "caption-heading-size": 36,
+        "caption-subheading-size": 20,
+        "caption-button-size": 14,
+        "show-slide-dots": true,
+        "show-slide-arrows": false,
+        "slider-navigation-color": "#ffffff"
+      }
+    },
+    "text-text-adverts": {
+      "type": "text--text-adverts",
+      "blocks": {
+        "advert-0": {
+          "type": "text",
+          "settings": {
+            "heading": "Fast Shipping",
+            "subheading": "Shout about your unique selling points",
+            "link": ""
+          }
+        },
+        "advert-1": {
+          "type": "text",
+          "settings": {
+            "heading": "Lab Quality Lenses",
+            "subheading": "Shout about your unique selling points",
+            "link": ""
+          }
+        },
+        "3433d42f-35ce-4c25-86c0-c26dcde34267": {
+          "type": "text",
+          "settings": {
+            "heading": "Affordable Price",
+            "subheading": "Shout about your unique selling points",
+            "link": ""
+          }
+        }
+      },
+      "block_order": [
+        "advert-0",
+        "advert-1",
+        "3433d42f-35ce-4c25-86c0-c26dcde34267"
+      ],
+      "settings": {
+        "colors": "dark"
+      }
+    },
+    "1663610320a3199f84": {
+      "type": "text--rich-text",
+      "settings": {
+        "colors": "white",
+        "title": "It’s always a good day to buy glasses online.",
+        "text": "<p>Express your every vision with affordable eyeglasses and prescription sunglasses.<br\/>Shop thousands of glasses with Virtual Try-On, 2-Day Delivery, and frames starting at just $6!<\/p>",
+        "button_label": "",
+        "button_link": ""
+      }
+    },
+    "collection-collection-list": {
+      "type": "collection--collection-list",
+      "blocks": {
+        "collection-0": {
+          "type": "featured_collection",
+          "settings": {
+            "collection": "men-eyeglasses",
+            "collection_img": "shopify:\/\/shop_images\/mensglasses_e4a6c23e-80c2-47a4-8a2b-5c90ad7fec4a.jpg",
+            "subheading": "See the latest styles of the season",
+            "overlay-btn-text": "Shop now",
+            "show-gradient-overlay": true,
+            "overlay_font_color": "#ffffff",
+            "overlay_color": "#323232"
+          }
+        },
+        "collection-1": {
+          "type": "featured_collection",
+          "settings": {
+            "collection": "women-eyeglasses",
+            "collection_img": "shopify:\/\/shop_images\/woman-glasses.jpg",
+            "subheading": "Sleek, simple, and always in style",
+            "overlay-btn-text": "Shop now",
+            "show-gradient-overlay": true,
+            "overlay_font_color": "#ffffff",
+            "overlay_color": "#323232"
+          }
+        },
+        "16be3781-6cb2-40aa-bfd7-95e6d9eaa129": {
+          "type": "featured_collection",
+          "settings": {
+            "collection": "reading-glasses",
+            "collection_img": "shopify:\/\/shop_images\/men-glasses.jpg",
+            "subheading": "Stylish reading glasses",
+            "overlay-btn-text": "Shop now",
+            "show-gradient-overlay": true,
+            "overlay_font_color": "#ffffff",
+            "overlay_color": "#323232"
+          }
+        }
+      },
+      "block_order": [
+        "collection-0",
+        "collection-1",
+        "16be3781-6cb2-40aa-bfd7-95e6d9eaa129"
+      ],
+      "settings": {
+        "colors": "white",
+        "title": "",
+        "richtext": "",
+        "items-per-row": 3,
+        "fill-the-area": true,
+        "remove-spacing": false,
+        "section-width": "full",
+        "content-position": "below-image"
+      }
+    },
+    "featured-collection": {
+      "type": "collection--featured-collection",
+      "settings": {
+        "colors": "white",
+        "title": "Best Sellers",
+        "richtext": "<p>The Best Selling Glasses at Great Prices for One and All.<\/p>",
+        "collection": "best-selling-eyeglasses",
+        "grid-desktop": 4,
+        "grid-tablet": 3,
+        "grid-mobile": 2,
+        "rows": 1,
+        "hover-effect": true,
+        "show-vendor": false,
+        "show_view_all": false
+      }
+    },
+    "video-video-hero": {
+      "type": "video--video-hero",
+      "settings": {
+        "url": "https:\/\/youtu.be\/9fRIs1MQv3Q",
+        "desktopHeight": "550",
+        "mobileHeight": "350",
+        "title": "Share your story",
+        "subheading": "Here's your chance to make a great first impression",
+        "textAlignment": "center-left",
+        "textColor": "#ffffff",
+        "textShadow": false,
+        "heading--text-size": 36,
+        "subheading--text-size": 24,
+        "link": "",
+        "button_label": "Learn more",
+        "button-text": "#333333",
+        "button-background": "#ffffff"
+      }
+    },
+    "featured-collection-01": {
+      "type": "collection--featured-collection",
+      "settings": {
+        "colors": "white",
+        "title": "New Arrivals",
+        "richtext": "<p>Discover all the latest eyeglass designs in our new arrivals section.<\/p>",
+        "collection": "new-arrivals",
+        "grid-desktop": 4,
+        "grid-tablet": 3,
+        "grid-mobile": 2,
+        "rows": 1,
+        "hover-effect": true,
+        "show-vendor": false,
+        "show_view_all": false
+      }
+    },
+    "logo-list": {
+      "type": "image--logo-list",
+      "blocks": {
+        "logo-list-0": {
+          "type": "logo_image",
+          "settings": {
+            "image": "shopify:\/\/shop_images\/Cap_2022-09-19_11-09-18-905.png",
+            "link": ""
+          }
+        },
+        "logo-list-1": {
+          "type": "logo_image",
+          "settings": {
+            "image": "shopify:\/\/shop_images\/Cap_2022-09-19_11-09-27-336.png",
+            "link": ""
+          }
+        },
+        "logo-list-2": {
+          "type": "logo_image",
+          "settings": {
+            "image": "shopify:\/\/shop_images\/Cap_2022-09-19_11-09-37-010.png",
+            "link": ""
+          }
+        }
+      },
+      "block_order": [
+        "logo-list-0",
+        "logo-list-1",
+        "logo-list-2"
+      ],
+      "settings": {
+        "colors": "white",
+        "width": 210,
+        "title": "As seen in"
+      }
+    },
+    "image-text-with-image-overlay-1": {
+      "type": "image--image-with-text-overlay",
+      "settings": {
+        "image": "shopify:\/\/shop_images\/tortoise-shell_a31fc596-649e-4bc6-8a2c-cf7640864592.jpg",
+        "image_height": "40vw",
+        "bg_image_overlay_opacity": 0,
+        "parallax": true,
+        "title": "Share your story",
+        "text": "Add a large image with text overlay to give focus to your chosen product, collection, or blog post",
+        "colors": "light",
+        "textPosition": "left",
+        "textAlignment": "right",
+        "heading--text-size": 36,
+        "text--text-size": 18,
+        "link": "shopify:\/\/collections\/all",
+        "button_label": "Learn more",
+        "button-text": "#ffffff",
+        "button-background": "#000000"
+      }
+    },
+    "text-testimonials": {
+      "type": "text--testimonials",
+      "blocks": {
+        "testimonials-0": {
+          "type": "text",
+          "settings": {
+            "testimonial_text": "<p>Show off incredible feedback from your customers<\/p>",
+            "customer_name": "John Smith",
+            "link": "shopify:\/\/collections\/all",
+            "stars": 5
+          }
+        },
+        "testimonials-1": {
+          "type": "text",
+          "settings": {
+            "testimonial_text": "<p>Show off incredible feedback from your customers<\/p>",
+            "customer_name": "John Smith",
+            "link": "shopify:\/\/collections\/all",
+            "stars": 5
+          }
+        },
+        "testimonials-2": {
+          "type": "text",
+          "settings": {
+            "testimonial_text": "<p>Show off incredible feedback from your customers<\/p>",
+            "customer_name": "John Smith",
+            "link": "shopify:\/\/collections\/all",
+            "stars": 5
+          }
+        }
+      },
+      "block_order": [
+        "testimonials-0",
+        "testimonials-1",
+        "testimonials-2"
+      ],
+      "settings": {
+        "colors": "white",
+        "circle_images": true,
+        "title": "Testimonials"
+      }
+    },
+    "image-image-with-text-1": {
+      "type": "image--image-with-text",
+      "disabled": true,
+      "settings": {
+        "colors": "white",
+        "text_overlapping_image": true,
+        "section-width": "full",
+        "layout": "left",
+        "text_alignment": "left",
+        "title": "Share brand or product details",
+        "text": "<p>Pair large text with an image to give focus to your chosen product, collection, or blog post. Add details on availability, style, or even provide a review.<\/p>",
+        "button_label": "Learn more",
+        "button_link": "shopify:\/\/collections"
+      }
+    },
+    "image-gallery": {
+      "type": "image--gallery",
+      "disabled": true,
+      "blocks": {
+        "gallery-0": {
+          "type": "image",
+          "settings": {
+            "link": "shopify:\/\/collections\/all",
+            "title": "Heading",
+            "subheading": "Subheading",
+            "overlay-btn-text": "",
+            "show-gradient-overlay": true,
+            "overlay_font_color": "#ffffff",
+            "overlay_color": "#1f1f1f"
+          }
+        },
+        "gallery-1": {
+          "type": "image",
+          "settings": {
+            "link": "shopify:\/\/collections\/all",
+            "title": "Heading",
+            "subheading": "Subheading",
+            "overlay-btn-text": "",
+            "show-gradient-overlay": true,
+            "overlay_font_color": "#ffffff",
+            "overlay_color": "#1f1f1f"
+          }
+        },
+        "gallery-2": {
+          "type": "image",
+          "settings": {
+            "link": "shopify:\/\/collections\/all",
+            "title": "Heading",
+            "subheading": "Subheading",
+            "overlay-btn-text": "",
+            "show-gradient-overlay": true,
+            "overlay_font_color": "#ffffff",
+            "overlay_color": "#1f1f1f"
+          }
+        },
+        "gallery-3": {
+          "type": "image",
+          "settings": {
+            "link": "shopify:\/\/collections\/all",
+            "title": "Heading",
+            "subheading": "Subheading",
+            "overlay-btn-text": "",
+            "show-gradient-overlay": true,
+            "overlay_font_color": "#ffffff",
+            "overlay_color": "#1f1f1f"
+          }
+        }
+      },
+      "block_order": [
+        "gallery-0",
+        "gallery-1",
+        "gallery-2",
+        "gallery-3"
+      ],
+      "settings": {
+        "colors": "white",
+        "title": "Gallery",
+        "richtext": "",
+        "remove-spacing": true,
+        "full-width": false,
+        "section-width": "full",
+        "content-position": "hover"
+      }
+    },
+    "image-gallery-0": {
+      "type": "image--gallery",
+      "disabled": true,
+      "blocks": {
+        "gallery-0": {
+          "type": "image",
+          "settings": {
+            "link": "shopify:\/\/collections\/all",
+            "title": "Heading",
+            "subheading": "Subheading",
+            "overlay-btn-text": "",
+            "show-gradient-overlay": true,
+            "overlay_font_color": "#ffffff",
+            "overlay_color": "#1f1f1f"
+          }
+        },
+        "gallery-1": {
+          "type": "image",
+          "settings": {
+            "link": "shopify:\/\/collections\/all",
+            "title": "Heading",
+            "subheading": "Subheading",
+            "overlay-btn-text": "",
+            "show-gradient-overlay": true,
+            "overlay_font_color": "#ffffff",
+            "overlay_color": "#1f1f1f"
+          }
+        },
+        "gallery-2": {
+          "type": "image",
+          "settings": {
+            "link": "shopify:\/\/collections\/all",
+            "title": "Heading",
+            "subheading": "Subheading",
+            "overlay-btn-text": "",
+            "show-gradient-overlay": true,
+            "overlay_font_color": "#ffffff",
+            "overlay_color": "#1f1f1f"
+          }
+        },
+        "gallery-3": {
+          "type": "image",
+          "settings": {
+            "link": "shopify:\/\/collections\/all",
+            "title": "Heading",
+            "subheading": "Subheading",
+            "overlay-btn-text": "",
+            "show-gradient-overlay": true,
+            "overlay_font_color": "#ffffff",
+            "overlay_color": "#1f1f1f"
+          }
+        }
+      },
+      "block_order": [
+        "gallery-0",
+        "gallery-1",
+        "gallery-2",
+        "gallery-3"
+      ],
+      "settings": {
+        "colors": "white",
+        "title": "",
+        "richtext": "",
+        "remove-spacing": true,
+        "full-width": false,
+        "section-width": "full",
+        "content-position": "hover"
+      }
+    },
+    "98e3cd9f-1b2f-4778-a049-324d41ed1e5e": {
+      "type": "collection--featured-collection",
+      "settings": {
+        "colors": "white",
+        "title": "On Sale",
+        "richtext": "<p>Save big with quality glasses. These styles won't last long. <\/p>",
+        "collection": "glasses-on-sale",
+        "grid-desktop": 5,
+        "grid-tablet": 3,
+        "grid-mobile": 2,
+        "rows": 1,
+        "hover-effect": false,
+        "show-vendor": false,
+        "show_view_all": false
+      }
+    },
+    "blog-blog-posts": {
+      "type": "blog--blog-posts",
+      "blocks": {
+        "a585f42f-00b7-4097-9ccd-6fb4d02838bf": {
+          "type": "blog",
+          "settings": {
+            "blog": "blog"
+          }
+        }
+      },
+      "block_order": [
+        "a585f42f-00b7-4097-9ccd-6fb4d02838bf"
+      ],
+      "settings": {
+        "colors": "white",
+        "title": "Blog",
+        "richtext": "",
+        "blog_show_date": false,
+        "post_limit": 3
+      }
+    },
+    "1664095726831888be": {
+      "type": "apps",
+      "blocks": {
+        "b3dc1cfa-2d73-4c86-b88f-f462a3f2b82c": {
+          "type": "shopify:\/\/apps\/instafeed-instagram-feed\/blocks\/app-block\/c447db20-095d-4a10-9725-b5977662c9d5",
+          "settings": {
+            "heading_size": 20,
+            "feed_width": 100,
+            "html_area": ""
+          }
+        }
+      },
+      "block_order": [
+        "b3dc1cfa-2d73-4c86-b88f-f462a3f2b82c"
+      ],
+      "settings": {
+        "include_margins": true
+      }
+    }
+  },
+  "order": [
+    "image-slideshow",
+    "text-text-adverts",
+    "1663610320a3199f84",
+    "collection-collection-list",
+    "featured-collection",
+    "video-video-hero",
+    "featured-collection-01",
+    "logo-list",
+    "image-text-with-image-overlay-1",
+    "text-testimonials",
+    "image-image-with-text-1",
+    "image-gallery",
+    "image-gallery-0",
+    "98e3cd9f-1b2f-4778-a049-324d41ed1e5e",
+    "blog-blog-posts",
+    "1664095726831888be"
+  ]
+}

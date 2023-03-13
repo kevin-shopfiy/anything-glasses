@@ -1,0 +1,1175 @@
+<!doctype html>
+<html class="no-js" lang="{{ request.locale.iso_code }}">
+<head>
+  <!-- Basic page needs ================================================== -->
+  <meta charset="utf-8">
+  {%- comment -%}DemoStoreRequirements{%- endcomment -%}
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+  <link rel="preconnect" href="https://cdn.shopify.com" crossorigin>
+  {%- unless settings.type_header_font.system? -%}
+    <link rel="preconnect" href="https://fonts.shopifycdn.com" crossorigin>
+  {%- endunless -%}
+
+  <link rel="preload" href="{{ 'theme.min.css' | asset_url }}" as="style" /><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.0/css/all.min.css" integrity="sha512-BnbUDfEUfV0Slx6TunuB042k9tuKe3xrD6q4mg5Ed72LTgzDIcLPxg6yI2gcMFRyomt+yJJxE+zJwNmxki6/RA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <link rel="preload" href="{{ 'swiper.min.css' | asset_url }}" as="style" onload="this.onload=null;this.rel='stylesheet'"/>
+  <link rel="preload" href="{{ 'custom.css' | asset_url }}" as="style" onload="this.onload=null;this.rel='stylesheet'"/>
+
+  {% if settings.animations_enabled %}
+  	<link rel="preload" href="{{ 'animate.min.css' | asset_url }}" as="style" onload="this.onload=null;this.rel='stylesheet'"/>
+  {% endif %}
+
+  {% if settings.popup--enable %}
+  	<link rel="preload" href="{{ 'fancybox.min.css' | asset_url }}" as="style" onload="this.onload=null;this.rel='stylesheet'"/>
+  {% endif %}
+
+  {% if settings.favicon != blank %}
+    <link rel="shortcut icon" href="{{ settings.favicon | img_url: '180x180', crop: 'center' }}" type="image/png">
+    <link rel="apple-touch-icon" sizes="180x180" href="{{ settings.favicon | img_url: '180x180', crop: 'center'  }}">
+    <link rel="apple-touch-icon-precomposed" sizes="180x180" href="{{ settings.favicon | img_url: '180x180', crop: 'center'  }}">
+    <link rel="icon" type="image/png" sizes="32x32" href="{{ settings.favicon | img_url: '32x32', crop: 'center'  }}">
+    <link rel="icon" type="image/png" sizes="194x194" href="{{ settings.favicon | img_url: '194x194', crop: 'center'  }}">
+    <link rel="icon" type="image/png" sizes="192x192" href="{{ settings.favicon | img_url: '192x192', crop: 'center'  }}">
+    <link rel="icon" type="image/png" sizes="16x16" href="{{ settings.favicon | img_url: '16x16', crop: 'center'  }}">
+  {% endif %}
+
+  {%- unless settings.type_header_font.system? -%}
+    <link rel="preload" as="font" href="{{ settings.type_header_font | font_url }}" type="font/woff2" crossorigin>
+  {%- endunless -%}
+  {%- unless settings.type_base_font.system? -%}
+    <link rel="preload" as="font" href="{{ settings.type_base_font | font_url }}" type="font/woff2" crossorigin>
+  {%- endunless -%}
+  {%- unless settings.type_navigation_font.system? -%}
+    <link rel="preload" as="font" href="{{ settings.type_navigation_font | font_url }}" type="font/woff2" crossorigin>
+  {%- endunless -%}
+
+  <!-- Title and description ================================================== -->
+  <title>
+    {{ page_title }}{% if current_tags %}{% assign meta_tags = current_tags | join: ', ' %} &ndash; {{ 'general.meta.tags' | t: tags: meta_tags }}{% endif %}{% if current_page != 1 %} &ndash; {{ 'general.meta.page' | t: page: current_page }}{% endif %}{% unless page_title contains shop.name %} &ndash; {{ shop.name }}{% endunless %}
+  </title>
+
+  {% if page_description %}
+    <meta name="description" content="{{ page_description | escape }}">
+  {% endif %}
+
+  <!-- Helpers ================================================== -->
+  {% render 'social-meta-tags' %}
+  <link rel="canonical" href="{{ canonical_url }}"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="theme-color" content="{{ settings.color_primary }}">
+
+  <!-- CSS ================================================== -->
+  {% render 'css-variables' %}
+  {% style %}
+    *,
+    *::before,
+    *::after {
+      box-sizing: inherit;
+    }
+
+    html {
+      box-sizing: border-box;
+      background-color: var(--body-color);
+      height: 100%;
+      margin: 0;
+    }
+
+    body {
+      background-color: var(--body-color);
+      min-height: 100%;
+      margin: 0;
+      display: grid;
+      grid-template-rows: auto auto 1fr auto;
+      grid-template-columns: 100%;
+    }
+
+    .sr-only {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      padding: 0;
+      margin: -1px;
+      overflow: hidden;
+      clip: rect(0, 0, 0, 0);
+      border: 0;
+    }
+
+    .sr-only-focusable:active, .sr-only-focusable:focus {
+      position: static;
+      width: auto;
+      height: auto;
+      margin: 0;
+      overflow: visible;
+      clip: auto;
+    }
+  {% endstyle %}
+
+  <!-- Header hook for plugins ================================================== -->
+  {{ content_for_header }}
+
+  {% if template contains 'customers' %}
+    {{ 'shopify_common.js' | shopify_asset_url | script_tag }}
+  {% endif %}
+
+  {% if template.name == 'article' %}
+    <script src="{{ 'textSlideshow.js' | asset_url }}" defer="defer"></script>
+  {% endif %}
+
+  <script>document.documentElement.className = document.documentElement.className.replace('no-js', 'js');</script>
+</head>
+
+{% comment %}
+  Add the page template as a class for easy page or template specific styling.
+{% endcomment %}
+<body id="{{ page_title | handle }}" class="{% if template == 'page.contact' %}contact-page {% endif %}{% if customer %}customer-logged-in {% endif %}template-{{ template | replace: '.', ' ' | truncatewords: 1, '' | handle }}{% unless settings.animations_enabled %} animations-disabled{% endunless %}{% if settings.page_fade_enabled %} page-fade{% endif %}{% if settings.color_body_bg == settings.header-bg-color %} white--match{% endif %}{% if settings.product-grid != 'natural' %} images-aspect-ratio{% endif %} ">
+
+  {{ 'theme.min.css' | asset_url | stylesheet_tag }}
+  <noscript>{{ 'font-awesome.min.css' | asset_url | stylesheet_tag }}</noscript>
+  <noscript>{{ 'swiper.min.css' | asset_url | stylesheet_tag }}</noscript>
+  {% if settings.animations_enabled %}
+  	<noscript>{{ 'animate.min.css' | asset_url | stylesheet_tag }}</noscript>
+  {% endif %}
+  {% if settings.popup--enable %}
+  	<noscript>{{ 'fancybox.min.css' | asset_url | stylesheet_tag }}</noscript>
+  {% endif %}
+  <noscript>{{ 'custom.css' | asset_url | stylesheet_tag }}</noscript>
+
+  {% comment %}
+  Cart Drawer, also used by 'Quick View', 'LogIn', and 'Search'
+  {% endcomment %}
+  {% render 'right-drawer' %}
+
+  <div id="DrawerOverlay" class="drawer-overlay"></div>
+
+  <div id="PageContainer" data-editor-open="{{ request.design_mode }}" data-cart-action="{{ settings.ajax_cart_method }}" data-language-url="{{ localization.language.root_url }}">
+    <div class="no-js disclaimer">
+      <p>This store requires javascript to be enabled for some features to work correctly.</p>
+    </div>
+
+    {% section 'announcement-bar' %}
+    {% section 'header' %}
+
+    {% unless template.name == 'collection' or template == 'list-collections' or template contains 'contact' %}
+      {% if settings.enable_breadcrumbs %}
+        {% render 'breadcrumb' %}
+      {% endif %}
+    {% endunless%}
+
+    {% if template == 'index' %}
+      <div class="flow-homepage">
+    {% elsif template == 'cart' or template contains 'customers/' %}
+      <div class="main-content page-main--wrapper">
+    {% else %}
+      <div class="wrapper main-content page-main--wrapper">
+    {% endif %}
+
+        {{ content_for_layout }}
+      </div>
+  </div>
+
+  <div class="footer-wrapper">
+      {% section 'footer' %}
+    </div>
+
+  <script defer type="module" src="{{ 'theme.min.js' | asset_url }}"></script>
+  <script defer nomodule src="{{ 'theme.legacy.min.js' | asset_url }}"></script>
+
+  {% if settings.popup--enable %}
+    {% render 'popup' %}
+  {% endif %}
+
+  {% if settings.enable_verification_popup %}
+    {% render 'verification-popup' %}
+  {% endif %}
+
+  <script type="application/json" id="wetheme-global">
+    {
+      {% comment %}Translations that will be used in javascript section handling{% endcomment %}
+      "translations": {
+        "addToCart": {{ 'products.product.add_to_cart' | t | json }},
+        "added": {{ 'products.product.added' | t | json }},
+        "soldOut": {{ 'products.product.sold_out' | t | json }},
+        "unavailable": {{ 'products.product.unavailable' | t | json }},
+        "no_results_html": {{ 'general.search.no_results_html' | t | json }},
+        "results_for_html": {{ 'general.search.results_for_html' | t | json }},
+        "products": {{ 'general.search.products' | t | json }},
+        "pages": {{ 'general.search.pages' | t | json }},
+        "collections": {{ 'general.search.collections' | t | json }},
+        "articles": {{ 'general.search.articles' | t | json }},
+        "quick_shop": {{ 'products.product.quick_shop' | t | json }},
+        "view_options": {{ 'products.product.view_options' | t | json }},
+        "read_more_html": {{ 'products.product.read_more_html' | t | json }},
+        "read_less_html": {{ 'products.product.read_less_html' | t | json }},
+        "youve_viewed": {{ 'collections.paginate.youve_viewed' | t | json }},
+        "load_more": {{ 'collections.paginate.load_more' | t | json }},
+        "productAdded": {{ 'products.product.added' | t | json }},
+        "loading": {{ 'collections.paginate.loading' | t | json }},
+        "giftwrap_label": {{ 'products.general.giftwrap_label' | t | json }},
+        "yes": {{ 'products.general.yes' | t | json }}
+      },
+      "moneyFormat": {{ shop.money_format | json }},
+      "giftwrapProduct": {{ settings.giftwrap_product_selector | json }}
+    }
+  </script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.1/jquery.min.js" integrity="sha512-aVKKRRi/Q/YV+4mjoKBsE4x3H+BkegoM/em46NNlCqNTmUYADjBbeNefNxYV7giUp0VxICtqdrbqU7iVaeZNXA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.js"></script>
+        <script>
+          $( document ).ready(function() {
+
+            // ---------------------------------------------------------------------------
+            // Money format handler
+            // ---------------------------------------------------------------------------
+            {% assign amount_format = '{{amount}}' %}
+            Shopify.money_format = "${{amount_format}}";
+            Shopify.formatMoney = function(cents, format) {
+              if (typeof cents == 'string') { cents = cents.replace('.',''); }
+              var value = '';
+              var placeholderRegex = /\{\{\s*(\w+)\s*\}\}/;
+              var formatString = (format || this.money_format);
+            
+              function defaultOption(opt, def) {
+                 return (typeof opt == 'undefined' ? def : opt);
+              }
+            
+              function formatWithDelimiters(number, precision, thousands, decimal) {
+                precision = defaultOption(precision, 2);
+                thousands = defaultOption(thousands, ',');
+                decimal   = defaultOption(decimal, '.');
+            
+                if (isNaN(number) || number == null) { return 0; }
+            
+                number = (number/100.0).toFixed(precision);
+            
+                var parts   = number.split('.'),
+                    dollars = parts[0].replace(/(\d)(?=(\d\d\d)+(?!\d))/g, '$1' + thousands),
+                    cents   = parts[1] ? (decimal + parts[1]) : '';
+            
+                return dollars + cents;
+              }
+            
+              switch(formatString.match(placeholderRegex)[1]) {
+                case 'amount':
+                  value = formatWithDelimiters(cents, 2);
+                  break;
+                case 'amount_no_decimals':
+                  value = formatWithDelimiters(cents, 0);
+                  break;
+                case 'amount_with_comma_separator':
+                  value = formatWithDelimiters(cents, 2, '.', ',');
+                  break;
+                case 'amount_no_decimals_with_comma_separator':
+                  value = formatWithDelimiters(cents, 0, '.', ',');
+                  break;
+              }
+            
+              return formatString.replace(placeholderRegex, value);
+            };
+                               
+              $(".swatch-items-wrapper .swatch-element.color input").click(function() {
+                  $(".swatch-items-wrapper .swatch-element.color input").removeAttr("checked")
+                  $(this).attr("checked", "checked")
+              });
+          
+              $(".template-product .btn-modal").click(function() {
+                  $("body").css("overflow","hidden")
+                  $(".custom-modal .steps[data-index='2'] .step-item-2c .done-steps-magnification a").css("pointer-events", "none");
+                  $(".content-modal .div_bottom").hide();
+                  var image_url = $(".product-medias__main .product-medias__primary > .zoomImg").attr("src");
+                  var value = $(".swatch-items-wrapper .swatch-element.color input:checked").val();
+                  var price = $(".product-details-wrapper #ProductPrice .money").text();
+                
+                  $(".custom-modal .info-product .product_image img").attr("src", image_url);
+                  $(".custom-modal .info-product .product_title h2 .variant").text(value);
+                  $(".custom-modal .info-product .box_Addcart .price").text(price);
+
+                  $(".template-product .custom-modal").addClass("is-active");
+                  $(".template-product .custom-modal").fadeIn();
+                  
+              });
+              $(".template-product .close-modal").click(function() {
+                  $("body").removeAttr("style");
+                  $(".template-product .custom-modal").removeClass("is-active")
+                  $(".template-product .custom-modal").fadeOut();
+              });
+
+              
+              var list = "",
+                  totalPrice = 0,
+                
+                  price_lens_type = 0,
+                  product_variant_lens_type = "",
+                
+                  price_magnification = 0,
+                  product_variant_magnification = "",
+                
+                  price_lens_material = 0
+                  product_variant_lens_material = "",
+                
+                  price_lens_options = 0,
+                  product_variant_lens_options = "",
+                
+                  price_lens_options_TINT = 0,
+                  product_variant_lens_options_TINT = "",
+                
+                  price_lens_options_MIRROR = 0,
+                  product_variant_lens_options_MIRROR = "",
+                
+                  setCheckout = false;
+
+
+              function get_totalprice(){  
+                var price = parseFloat($(".product-details-wrapper h1.product-details-product-title").attr("data-money"));
+                totalPrice = price+price_lens_type+price_magnification+price_lens_material+price_lens_options+price_lens_options_TINT+price_lens_options_MIRROR;
+                $(".product-total-price .price").text(Shopify.formatMoney(totalPrice, '{{amount}}'))
+              }
+              
+
+              $(".template-product .add-to-cart-custom").click(function(e) {
+                  e.preventdefault;
+                  $("body").removeAttr("style");
+                  $(".content-modal .div_bottom").hide();
+                  $(".loader").addClass("active");
+                  list = product_variant_magnification +","+ product_variant_lens_type +","+ product_variant_lens_material +","+ product_variant_lens_options +","+ product_variant_lens_options_TINT +","+ product_variant_lens_options_MIRROR;
+                  var newVariantIdArray = list.split(',');
+                  var product_data = newVariantIdArray.map(variantId => {
+                    if(variantId != ""){
+                      return {quantity: 1, id: variantId}
+                    }
+                  })
+                  var data = {
+                    items: product_data
+                  }
+                  
+                  fetch('/cart/add.js', {
+                    body: JSON.stringify(data),
+                    credentials: 'same-origin',
+                    headers: {
+                      'Content-Type': 'application/json',
+                      'X-Requested-With':'xmlhttprequest'
+                    },
+                    method: 'POST'
+                  }).then((response) => {
+                    return response.json();
+                  }).then((json) => {
+                    $.ajax({
+                      type: 'POST', 
+                      url: '/cart/add.js',
+                      dataType: 'json', 
+                      data: $('#form-custom').serialize(),
+                      beforeSend: function () {
+                        
+                      },
+                      success: function(data){
+                         setTimeout(() => {
+                          if(setCheckout == true){
+                            window.location.href = '/checkout';
+                          } else {
+                            window.location.href = '/cart';
+                          }          
+                        }, 500)
+                      },
+                      error: function(data){
+                        alert(data.responseJSON.description);
+                      }
+                   }).done(function() {     
+                      
+                   });
+                  }).catch((err) => {
+                    alert(err.responseJSON.description);
+                  });
+                  
+              });
+             
+              // back button
+              $(".custom-modal").on("click",".main-modal .header-modal .prev",function() {
+                $("body").removeAttr("style");
+                $(".custom-modal .steps[data-index='2'] .step-item-2c .done-steps-magnification a").css("pointer-events", "none");
+                $(".content-modal .div_bottom").hide();
+                var index = $(this).attr("data-index");
+                var indexPrev = index - 1;
+                var title = $(".top-navigation .item[data-index="+indexPrev+"]").attr("data-name");
+
+                if(index == 1){
+                  $(".template-product .custom-modal").fadeOut();
+                  $(".template-product .custom-modal").removeClass("is-active")
+                } else if(index == "2a"){  
+                  step.removeClass("active");
+                  $(".custom-modal .steps[data-index='2'] .content-modal").removeClass("active");
+                  $(".custom-modal .steps[data-index='2'] .step-item-2a").addClass("active");
+                  $(".top-navigation .item[data-index='2']").removeClass("is-selected");
+                  $(".custom-modal .steps[data-index='2']").addClass("active");
+                  $(".main-modal .header-modal .prev").attr("data-index", 2);
+                  $(".main-modal .header-modal h2").text("Add Prescription");
+                } else if(index >= 4 && value_selected == "NON-PRESCRIPTION") {
+                  step.removeClass("active");
+                  $(".main-modal .header-modal .prev").attr("data-index", "1");
+                  $(".main-modal .header-modal h2").text("Select Lens Type")
+                  $(".top-navigation .item[data-index='1']").addClass("active");
+                  $(".content-steps .steps[data-index='1']").addClass("active");
+                } else {
+                  step.removeClass("active");
+                  $(".top-navigation .item[data-index="+indexPrev+"]").removeClass("is-selected");
+                  $(".custom-modal .steps[data-index="+indexPrev+"]").addClass("active");
+                  $(".main-modal .header-modal .prev").attr("data-index", indexPrev);
+                  $(".main-modal .header-modal h2").text(title);
+                  if(index > 3) {
+                    $(".top-sub-navigation .btn").removeClass("active");
+                    $(".top-sub-navigation .btn[data-index="+indexPrev+"]").addClass("active");
+                  } else{
+                    $(".top-sub-navigation").hide();
+                  }
+                }
+              });
+            
+              // Steps
+              var step = $(".custom-modal .steps");
+              $(".custom-modal").on("click",".top-navigation .item.active",function() {
+                $(".content-modal .div_bottom").hide();                
+                var $this = $(this);
+                if($(this).hasClass("is-selected")){
+                  $this.removeClass("is-selected")
+                }
+                var index = $(this).attr("data-index");
+                var title = $(this).attr("data-name");
+                step.removeClass("active");
+                $(".custom-modal .steps[data-index="+index+"]").addClass("active");
+                $(".main-modal .header-modal .prev").attr("data-index", index);
+                $(".main-modal .header-modal h2").text(title);
+                if(index < 3) {
+                  $(".top-sub-navigation").hide();
+                } else {
+                  $(".top-sub-navigation .btn").removeClass("active");
+                  $(".top-sub-navigation .btn[data-index="+index+"]").addClass("active");
+                  if(value_selected == "READERS"){
+                    $(".top-sub-navigation").show();
+                  } else {
+                    $(".top-sub-navigation").hide();
+                  }
+                }
+                $(".custom-modal .steps[data-index='2'] .content-modal").removeClass("active");
+                $(".custom-modal .steps[data-index='2'] .content-modal.step-item-2a").addClass("active");
+              });
+
+              $(".custom-modal").on("click",".prescription-top-btns-container .new_prescription",function() {
+                $(".top-navigation .item").removeClass("active is-selected");
+                $(".content-steps .steps").removeClass("active");
+                $(".main-modal .header-modal .prev").attr("data-index", "1");
+                $(".main-modal .header-modal h2").text("Select Lens Type")
+                $(".top-navigation .item[data-index='1']").addClass("active");
+                $(".content-steps .steps[data-index='1']").addClass("active");
+              });
+
+              // steps 1 
+              var value_selected = "";
+              $(".custom-modal .steps[data-index='1']").on("click",".panel-option li",function() {
+                var index = $(this).attr("data-index");
+                value_selected = $(this).find("input").val();
+                if(value_selected == "Single Vision"){
+                  $("select.os_add").attr("disabled","disabled");
+                  $(".modal-confirm .eye_add").hide();
+                  $(".custom-modal .steps[data-index='2']").find(".content-modal-v1").show();
+                  $(".custom-modal .steps[data-index='2']").find(".content-modal-v2").hide();
+                  $(".custom-modal .steps[data-index='3']").find(".content-v1").show();
+                  $(".custom-modal .steps[data-index='3']").find(".content-v2").hide();
+                  $(".custom-modal .steps[data-index='3']").find(".content-v3").hide();
+                } else if(value_selected == "Progressive NO LINE"){
+                  $("select.os_add").removeAttr("disabled");
+                  $(".custom-modal .steps[data-index='3']").find(".content-v1").hide();
+                  $(".custom-modal .steps[data-index='3']").find(".content-v2").show();
+                  $(".custom-modal .steps[data-index='3']").find(".content-v3").hide();
+                } else if(value_selected == "Bifocal WITH LINE"){
+                  $("select.os_add").removeAttr("disabled");
+                  $(".custom-modal .steps[data-index='3']").find(".content-v1").hide();
+                  $(".custom-modal .steps[data-index='3']").find(".content-v2").hide();
+                  $(".custom-modal .steps[data-index='3']").find(".content-v3").show();
+                } else if(value_selected == "READERS"){
+                  $("#right-sphere").val("NA");
+                  $("#left-sphere").val("NA");
+                  $("#right-cylinder").val("NA");
+                  $("#left-cylinder").val("NA");
+                  $("#right-axis").val("");
+                  $("#left-axis").val("");
+                  $("#right-pd").val("");
+                  $("#left-pd").val("");
+                  $("#right-add").val("NA");
+                  $("#left-add").val("NA");
+                  
+                  $(".custom-modal .steps[data-index='3']").find(".content-v1").show();
+                  $(".custom-modal .steps[data-index='3']").find(".content-v2").hide();
+                  $(".custom-modal .steps[data-index='3']").find(".content-v3").hide();
+                  $(".custom-modal .steps[data-index='2']").find(".content-modal-v1").hide();
+                  $(".custom-modal .steps[data-index='2']").find(".content-modal-v2").show();
+                  
+                  $(".custom-modal .steps[data-index='5']").find(".content-item").hide();
+                  $(".custom-modal .steps[data-index='5']").find(".content-item.content-v1").show();
+                  $(".custom-modal .steps[data-index='6']").find(".content-item").hide();
+                  $(".custom-modal .steps[data-index='6']").find(".content-item.content-v2").show();
+                  $(".custom-modal .steps[data-index='7']").find(".content-item").hide();
+                  $(".custom-modal .steps[data-index='7']").find(".content-item.content-v2").show();
+
+                } else {
+                  $("select.os_add").removeAttr("disabled");
+                  $(".modal-confirm .eye_add").show();
+                  $(".custom-modal .steps[data-index='2']").find(".content-modal-v1").show();
+                  $(".custom-modal .steps[data-index='2']").find(".content-modal-v2").hide();
+
+                  $(".custom-modal .steps[data-index='5']").find(".content-item").hide();
+                  $(".custom-modal .steps[data-index='5']").find(".content-item.content-v1").show();
+                  $(".custom-modal .steps[data-index='6']").find(".content-item").hide();
+                  $(".custom-modal .steps[data-index='6']").find(".content-item.content-v1").show();
+                  $(".custom-modal .steps[data-index='7']").find(".content-item").hide();
+                  $(".custom-modal .steps[data-index='7']").find(".content-item.content-v1").show();
+                }
+                 if(value_selected == "NON-PRESCRIPTION"){
+                  $("#right-sphere").val("+1.75");
+                  $("#left-sphere").val("+0.75");
+                  $("#right-cylinder").val("NA");
+                  $("#left-cylinder").val("NA");
+                  $("#right-axis").val("");
+                  $("#left-axis").val("");
+                  $("#right-pd").val("24.5");
+                  $("#left-pd").val("24.5");
+                  $("#right-add").val("NA");
+                  $("#left-add").val("NA");
+                  $(".custom-modal .steps[data-index='3']").find(".content-v1").show();
+                  $(".custom-modal .steps[data-index='3']").find(".content-v2").hide();
+                  $(".custom-modal .steps[data-index='3']").find(".content-v3").hide();
+                  step.removeClass("active");
+                  $(".steps[data-index='3'] input[value='Standard']").attr("checked","checked");
+                  $(".main-modal .header-modal h2").text("Lens Material")
+                  $(".main-modal .header-modal .prev").attr("data-index", 4);
+                  $(".top-navigation .item[data-index='1']").addClass("is-selected");
+                   $(".top-navigation .item[data-index='2']").addClass("is-selected");
+                  $(".top-navigation .item[data-index='4']").addClass("active");
+                  $(".custom-modal .steps[data-index='4']").addClass("active");
+                   $(".top-navigation .item[data-index='3']").removeClass("active is-selected");
+                } else {
+                  step.removeClass("active");
+                   if(value_selected == "READERS"){
+                     $(".main-modal .header-modal h2").text("Magnification")
+                     $(".top-navigation .item[data-index='3']").removeClass("active is-selected");
+                   } else {
+                     $(".main-modal .header-modal h2").text("Add Prescription")
+                   }
+                  $(".main-modal .header-modal .prev").attr("data-index", 2);
+                  $(".top-navigation .item[data-index='1']").addClass("is-selected");
+                  $(".top-navigation .item[data-index='2']").addClass("active");
+                  $(".custom-modal .steps[data-index='2']").addClass("active");
+                }
+                if(value_selected == "READERS"){
+                  $(".custom-modal .steps[data-index='2']").find(".content-modal").removeClass("active");
+                  $(".custom-modal .steps[data-index='2']").find(".content-modal.step-item-2c").addClass("active");
+                   $(".top-navigation .item[data-index='3']").removeClass("active is-selected");
+                } else {
+                  $(".custom-modal .steps[data-index='2'] .content-modal").removeClass("active");
+                  $(".custom-modal .steps[data-index='2'] .content-modal.step-item-2a").addClass("active");
+                }
+                
+              });
+
+              // steps 2
+              $(".custom-modal .steps[data-index='2']").on("click",".content-modal:not(.step-item-2c) .panel-option li",function() {
+                var value = $(this).find("input").val();
+                $(".main-modal .header-modal .prev").attr("data-index", "2a");
+                if(value == "Upload"){
+                  $(".custom-modal .steps[data-index='2'] .content-modal").removeClass("active")
+                  $(".step-item-2b").addClass("active");
+                  $(".step-item-2b .content-modal-item").hide();
+                  $(".step-item-2b .content-modal-item.content-modal-v3").show();
+                } else if(value == "Manually"){
+                  $(".custom-modal .steps[data-index='2'] .content-modal").removeClass("active")
+                  $(".step-item-2b").addClass("active");
+                  if(value_selected == "READERS"){
+                    $(".step-item-2b .content-modal-item").hide();
+                    $(".step-item-2b .content-modal-item.content-modal-v2").show();
+                  } else {
+                    $(".step-item-2b .content-modal-item").hide();
+                    $(".step-item-2b .content-modal-item.content-modal-v1").show();
+                  }
+                  
+                } else {
+                  $("#right-sphere").val("NA");
+                  $("#left-sphere").val("NA");
+                  $("#right-cylinder").val("NA");
+                  $("#left-cylinder").val("NA");
+                  $("#right-axis").val("");
+                  $("#left-axis").val("");
+                  $("#right-pd").val("");
+                  $("#left-pd").val("");
+                  $("#right-add").val("NA");
+                  $("#left-add").val("NA");
+                  step.removeClass("active");
+                  $(".main-modal .header-modal h2").text("Lens Material");
+                  $(".steps[data-index='3'] input[value='Standard']").attr("checked","checked");
+                  $(".top-navigation .item[data-index='1']").addClass("is-selected");
+                  $(".top-navigation .item[data-index='2']").addClass("is-selected");
+                  $(".top-navigation .item[data-index='3']").addClass("is-selected");
+                  $(".top-navigation .item[data-index='4']").addClass("active");
+                  $(".custom-modal .steps[data-index='4']").addClass("active");
+                }
+              });
+
+              var value_magnification_all = "",
+                  value_magnification_name = "",
+                  value_magnification_value = "";
+
+              function get_value_magnification(){       
+                  value_magnification_name =  $(".custom-modal .steps[data-index='2'] .step-item-2c .item.is-selected input[type='radio']").val();
+                  value_magnification_value =  $(".custom-modal .steps[data-index='2'] .step-item-2c .item.is-selected .list-value li.active input").val();
+                  value_magnification_all = value_magnification_name+"/"+value_magnification_value;
+                  $(".custom-modal .steps[data-index='2'] .Magnification").val(value_magnification_all)
+              }
+
+              $(".custom-modal .steps[data-index='2']").on("click",".step-item-2c .panel-option li input.select-name",function() {
+                  $(".custom-modal .steps[data-index='2'] .step-item-2c .item .list-value li").removeClass("active");
+                  $(".custom-modal .steps[data-index='2'] .step-item-2c .item").removeClass("is-selected");
+                  $(".custom-modal .steps[data-index='2'] .step-item-2c .item .list-value").hide();
+                  $(".custom-modal .steps[data-index='2'] .step-item-2c .done-steps-magnification a").removeAttr("style");
+                  $(this).parent().addClass("is-selected");
+                  $(this).parent().find(".list-value li:first-child").addClass("active");
+                  $(this).parent().find(".list-value").css("display","grid");
+                  var varID = $(this).parent().find(".product_variant").val();
+                  var price = parseFloat($(this).parent().find(".product_variant").attr("data-price"));
+
+                  if(typeof(varID) != "undefined"){
+                    product_variant_magnification = varID;
+                  } else {
+                    product_variant_magnification = "";
+                  }
+                  if(typeof($(this).parent().find(".product_variant").attr("data-price")) != "undefined"){
+                    price_magnification = price;
+                  } else {
+                    price_magnification = 0;
+                  }
+                  console.log("price_magnification: "+price_magnification);
+                  get_totalprice();
+                  get_value_magnification();
+              });
+
+              $(".custom-modal .steps[data-index='2']").on("click",".step-item-2c .panel-option li .list-value li input",function() {
+                  $(".custom-modal .steps[data-index='2'] .step-item-2c .item .list-value li").removeClass("active");
+                  $(this).parent().addClass("active");
+                  get_value_magnification();
+              });
+
+              $(".custom-modal .steps[data-index='2'] .step-item-2c ").on("click",".done-steps-magnification a.btn-done",function() {
+                get_value_magnification();
+                step.removeClass("active");
+                if(value_selected == "READERS"){
+                  $(".steps[data-index='3'] input[value='Standard']").attr("checked","checked");
+                  $(".main-modal .header-modal h2").text("Lens Material")
+                  $(".main-modal .header-modal .prev").attr("data-index", 4);
+                  $(".top-navigation .item[data-index='1']").addClass("is-selected");
+                  $(".top-navigation .item[data-index='2']").addClass("is-selected");
+                  $(".top-navigation .item[data-index='4']").addClass("active");
+                  $(".custom-modal .steps[data-index='4']").addClass("active");
+                } else {
+                  $(".main-modal .header-modal h2").text("Lens Material");
+                  $(".main-modal .header-modal .prev").attr("data-index", 3);
+                  $(".top-navigation .item[data-index='1']").addClass("is-selected");
+                  $(".top-navigation .item[data-index='2']").addClass("is-selected");
+                  $(".top-navigation .item[data-index='3']").addClass("active");
+                  $(".custom-modal .steps[data-index='3']").addClass("active");
+                }
+              });
+
+              $(".custom-modal .steps[data-index='2'] .step-item-2c ").on("click",".done-steps-magnification a.btn-checkout",function() {
+                  setCheckout = true;
+                  $(".template-product .add-to-cart-custom").trigger("click");
+                
+              });
+              
+              $(".custom-modal").on("click",".confirm_prescription",function() {
+                var right_sphere = $("#right-sphere").val();
+                var left_sphere = $("#left-sphere").val();
+                var right_cylinder = $("#right-cylinder").val();
+                var left_cylinder = $("#left-cylinder").val();
+                var right_axis = $("#right-axis").val();
+                var left_axis = $("#left-axis").val();
+                var right_pd = $("#right-pd").val();
+                var left_pd = $("#left-pd").val();
+                var right_add = $("#right-add").val();
+                var left_add = $("#left-add").val();
+                
+                if(right_sphere == "NA"){
+                  $(".modal-error .content-modal-popup .right_sphere").show();
+                } else {
+                  $(".modal-error .content-modal-popup .right_sphere").hide();
+                }
+                if(left_sphere == "NA"){
+                  $(".modal-error .content-modal-popup .left_sphere").show();
+                } else {
+                  $(".modal-error .content-modal-popup .left_sphere").hide();
+                }
+
+                if(right_cylinder == "NA"){
+                  $(".modal-error .content-modal-popup .right_cylinder").show();
+                } else {
+                  $(".modal-error .content-modal-popup .right_cylinder").hide();
+                }
+                if(left_cylinder == "NA"){
+                  $(".modal-error .content-modal-popup .left_cylinder").show();
+                } else {
+                  $(".modal-error .content-modal-popup .left_cylinder").hide();
+                }
+
+                
+                if(right_axis == ""){
+                  $(".modal-error .content-modal-popup .right_axis").show();
+                } else {
+                  $(".modal-error .content-modal-popup .right_axis").hide();
+                }
+                if(left_axis == ""){
+                  $(".modal-error .content-modal-popup .left_axis").show();
+                } else {
+                  $(".modal-error .content-modal-popup .left_axis").hide();
+                }
+
+                if(right_pd == "NA"){
+                  $(".modal-error .content-modal-popup .right_pd").show();
+                } else {
+                  $(".modal-error .content-modal-popup .right_pd").hide();
+                }
+                if(left_pd == "NA"){
+                  $(".modal-error .content-modal-popup .left_pd").show();
+                } else {
+                  $(".modal-error .content-modal-popup .left_pd").hide();
+                }
+                
+                if(value_selected != "Single Vision"){
+                  if(right_add == ""){
+                    $(".modal-error .content-modal-popup .right_add").show();
+                  } else {
+                    $(".modal-error .content-modal-popup .right_add").hide();
+                  }
+                  if(left_add == ""){
+                    $(".modal-error .content-modal-popup .left_add").show();
+                  } else {
+                    $(".modal-error .content-modal-popup .left_add").hide();
+                  }
+                } else {
+                  $(".modal-error .content-modal-popup .left_add").hide();
+                  $(".modal-error .content-modal-popup .right_add").hide();
+                }
+
+                $(".modal-confirm .right_sphere").text(right_sphere);
+                $(".modal-confirm .right_cylinder").text(right_cylinder);
+                $(".modal-confirm .right_axis").text(right_axis);
+                $(".modal-confirm .right_add").text(right_add);
+                $(".modal-confirm .right_pd").text(right_pd);
+
+                $(".modal-confirm .left_sphere").text(left_sphere);
+                $(".modal-confirm .left_cylinder").text(left_cylinder);
+                $(".modal-confirm .left_axis").text(left_axis);
+                $(".modal-confirm .left_add").text(left_add);
+                $(".modal-confirm .left_pd").text(left_pd);
+                
+
+                
+                if(value_selected == "Single Vision"){
+                  if(right_sphere != "NA" && left_sphere != "NA" && right_cylinder != "NA" && left_cylinder != "NA" && right_axis != "" && left_axis != "" && right_pd != "NA" && left_pd != "NA" ){
+                    $(".modal .modal-error").hide();
+                    $(".modal .modal-confirm").show();
+                    $(".modal-error .content-modal-popup .right_axis").show();
+                    $(".modal-error .content-modal-popup .left_axis").show();
+                    $(".modal-error .content-modal-popup .right_cylinder").show();
+                    $(".modal-error .content-modal-popup .left_cylinder").show();
+                  } else if(right_sphere != "NA" && left_sphere != "NA" && right_cylinder == "NA" && left_cylinder == "NA" && right_axis == "" && left_axis == "" && right_pd != "NA" && left_pd != "NA" ) {
+                    $(".modal .modal-error").hide();
+                    $(".modal .modal-confirm").show();
+                    $(".modal-confirm .eye_cylinder").hide();
+                    $(".modal-confirm .eye_axis").hide();
+                  } else if(right_sphere != "NA" && left_sphere != "NA" && right_cylinder == "NA" && left_cylinder == "NA" && right_axis == "" && left_axis == "" && right_pd == "NA" && left_pd == "NA") {
+                    $(".modal .modal-error").show();
+                    $(".modal .modal-confirm").hide();
+                    $(".modal-error .content-modal-popup .right_axis").hide();
+                    $(".modal-error .content-modal-popup .left_axis").hide();
+                    $(".modal-error .content-modal-popup .right_cylinder").hide();
+                    $(".modal-error .content-modal-popup .left_cylinder").hide();
+                  } else {
+                    $(".modal .modal-error").show();
+                    $(".modal .modal-confirm").hide();
+                    $(".modal-confirm .eye_cylinder").show();
+                    $(".modal-confirm .eye_axis").show();
+                  }
+                } else if(value_selected == "Progressive NO LINE" || value_selected == "Bifocal WITH LINE") {
+                  if(right_sphere != "NA" && left_sphere != "NA" && right_cylinder != "NA" && left_cylinder != "NA" && right_axis != "" && left_axis != "" && right_pd != "NA" && left_pd != "NA" && right_add != "" && left_add != "" ){
+                    $(".modal .modal-error").hide();
+                    $(".modal .modal-confirm").show();
+                  } else if(right_sphere != "NA" && left_sphere != "NA" && right_cylinder == "NA" && left_cylinder == "NA" && right_axis == "" && left_axis == "" && right_pd != "NA" && left_pd != "NA" && right_add != "" && left_add != ""){
+                    $(".modal .modal-error").hide();
+                    $(".modal .modal-confirm").show();
+                    $(".modal-confirm .eye_cylinder").hide();
+                    $(".modal-confirm .eye_axis").hide();
+                  } else if(right_sphere != "NA" && left_sphere != "NA" && right_cylinder == "NA" && left_cylinder == "NA" && right_axis == "" && left_axis == "" && right_pd != "NA" && left_pd != "NA" && right_add == "" && left_add == ""){
+                    $(".modal .modal-error").show();
+                    $(".modal .modal-confirm").hide();
+                    $(".modal-error .content-modal-popup .right_axis").hide();
+                    $(".modal-error .content-modal-popup .left_axis").hide();
+                    $(".modal-error .content-modal-popup .right_cylinder").hide();
+                    $(".modal-error .content-modal-popup .left_cylinder").hide();
+                  } else {
+                    $(".modal .modal-error").show();
+                    $(".modal .modal-confirm").hide();
+                    $(".modal-confirm .eye_cylinder").show();
+                    $(".modal-confirm .eye_axis").show();
+                  }
+                }
+
+              });
+
+              $(".custom-modal .steps[data-index='2']").on("change",".content-modal-v2 select",function() {
+                step.removeClass("active");
+                $(".main-modal .header-modal h2").text("Lens Material");
+                $(".main-modal .header-modal .prev").attr("data-index", 3);
+                $(".top-navigation .item[data-index='1']").addClass("is-selected");
+                $(".top-navigation .item[data-index='2']").addClass("is-selected");
+                $(".top-navigation .item[data-index='3']").addClass("active");
+                $(".custom-modal .steps[data-index='3']").addClass("active");
+              });
+            
+              $(".modal .main-modal").on("click",".confirm-btn-container .btn-confirm",function() {
+                $(".custom-modal .alert-success").show();
+                $(".content-modal .div_bottom").hide();
+                setTimeout(() => {
+                  step.removeClass("active");
+                  $(".steps[data-index='3'] input[value='Standard']").attr("checked","checked");
+                  $(".main-modal .header-modal h2").text("Lens Material")
+                  $(".main-modal .header-modal .prev").attr("data-index", 4);
+                  $(".top-navigation .item[data-index='1']").addClass("is-selected");
+                  $(".top-navigation .item[data-index='2']").addClass("is-selected");
+                  $(".top-navigation .item[data-index='4']").addClass("active");
+                  $(".custom-modal .steps[data-index='4']").addClass("active");
+                }, 500)
+              });
+
+              $(".custom-modal .steps[data-index='2']").on('change', 'input,select', function() {
+                $(".custom-modal .alert-success").hide();
+                $(".content-modal .div_bottom").show();
+              });
+
+              $(".custom-modal .steps[data-index='2']").on('change', '.rx-pd-checkbox input', function() {
+                var $this = $(this)
+                if($(this).is(':checked') == false){
+                  $this.parents(".add-pd-container").find(".js-pd-add-two-right .pd-add-two").hide();
+                  $this.parents(".add-pd-container").find(".js-pd-add-two-right .pd-add-one").show();
+                  $this.parents(".add-pd-container").find(".js-pd-add-two-left").hide();
+                  $this.parents(".add-pd-container").find(".js-pd-add-two-right .pd-add-two select").val("NA");
+                  $this.parents(".add-pd-container").find(".js-pd-add-two-left select").val("NA");
+                  $this.parents(".add-pd-container").find(".js-pd-add-two-right .pd-add-one select").removeAttr("disabled");
+                  $(".main-modal td.left_pd").hide();
+                  $(".main-modal .right_pd").attr("rowspan","2");
+                  $this.parents(".add-pd-container").find(".js-pd-add-two-right .pd-add-two select").removeAttr("id");
+                  $this.parents(".add-pd-container").find(".js-pd-add-two-left select").removeAttr("id");
+                } else {
+                  $this.parents(".add-pd-container").find(".js-pd-add-two-right .pd-add-two").show();
+                  $this.parents(".add-pd-container").find(".js-pd-add-two-right .pd-add-one").hide();
+                  $this.parents(".add-pd-container").find(".js-pd-add-two-left").show();
+                  $this.parents(".add-pd-container").find(".js-pd-add-two-right .pd-add-one select").attr("disabled" , "disabled");
+                  $(".main-modal td.left_pd").show();
+                  $(".main-modal .right_pd").removeAttr("rowspan");
+                  $this.parents(".add-pd-container").find(".js-pd-add-two-right .pd-add-two select").attr("id","right-pd");
+                  $this.parents(".add-pd-container").find(".js-pd-add-two-left select").attr("id","left-pd");
+                }
+              });
+            
+              // Step 3
+
+              $(".custom-modal .steps[data-index='3']").on("click",".panel-option li",function() {                
+                step.removeClass("active");
+                $(".content-modal .div_bottom").hide();
+                if(value_selected == "READERS"){
+                  $(".top-sub-navigation").show();
+                } else {
+                  $(".top-sub-navigation").hide();
+                }
+                $(".main-modal .header-modal h2").text("Lens Material")
+                $(".main-modal .header-modal .prev").attr("data-index", 4);
+                $(".top-navigation .item[data-index='3']").addClass("is-selected");
+                $(".top-navigation .item[data-index='4']").addClass("active");
+                $(".custom-modal .steps[data-index='4']").addClass("active");  
+                var varID = $(this).find(".product_variant").val();
+                var price = parseFloat($(this).parent().find(".product_variant").attr("data-price"));
+
+                if(typeof(varID) != "undefined"){
+                  product_variant_lens_type = varID;
+                } else {
+                  product_variant_lens_type = ""
+                }
+                if(typeof($(this).parent().find(".product_variant").attr("data-price")) != "undefined"){
+                  price_lens_type = price;
+                } else {
+                  price_lens_type = 0
+                }
+                console.log("price_lens_type: "+price_lens_type);
+                get_totalprice();
+              });
+
+              // Step 4
+
+              $(".custom-modal .steps[data-index='4']").on("click",".panel-option li",function() {
+                step.removeClass("active");
+                if(value_selected == "READERS"){
+                  $(".top-sub-navigation").show();
+                } else {
+                  $(".top-sub-navigation").hide();
+                }
+                $(".main-modal .header-modal h2").text("Lens Options")
+                $(".main-modal .header-modal .prev").attr("data-index", 5);
+                $(".top-navigation .item[data-index='4']").addClass("is-selected");
+                $(".top-navigation .item[data-index='5']").addClass("active");
+                $(".custom-modal .steps[data-index='5']").addClass("active");
+                var varID = $(this).find(".product_variant").val();
+                var price = parseFloat($(this).find(".product_variant").attr("data-price"));
+
+                if(typeof(varID) != "undefined"){
+                  product_variant_lens_material = varID;
+                } else {
+                  product_variant_lens_material = ""
+                }
+                if(typeof($(this).find(".product_variant").attr("data-price")) != "undefined"){
+                  console.log("true")
+                  price_lens_material = price;
+                } else {
+                  console.log("false")
+                  price_lens_material = 0
+                }
+                console.log("price_lens_material: "+price_lens_material);
+                get_totalprice();
+                $(".info-product").find(".add-to-cart-custom").removeAttr("style")
+              });
+
+              
+
+              // Step 5
+
+              var value_all_TINT = "",
+                  value_name_TINT = "",
+                  value_color_TINT = "",
+                  value_darkness_TINT = "",
+                  value_all_MIRROR = "",
+                  value_name_MIRROR = "",
+                  value_color_MIRROR = "";
+              function confirmcolor_TINT(){
+                  value_name_TINT = $(".custom-modal .steps[data-index='6'] .panel-option .item.is-selected input[type='radio']").val();
+                  value_color_TINT = $(".custom-modal .steps[data-index='6'] .panel-option .item.is-selected .swatch .swatch-element.active").attr("data-value");
+                  value_darkness_TINT = $(".custom-modal .steps[data-index='6'] .panel-option .item.is-selected .darkness").find(":selected").val();
+                  if(value_name_TINT == "None"){
+                    value_all_TINT = "None"
+                  } else {
+                    value_all_TINT = value_name_TINT+"/"+value_color_TINT;
+                  }
+                  $(".custom-modal .steps[data-index='6'] .Sunglasses-Tint").val(value_all_TINT)
+              }
+              function confirmcolor_MIRROR(){
+                  value_name_MIRROR = $(".custom-modal .steps[data-index='7'] .panel-option .item.is-selected input[type='radio']").val();
+                  value_color_MIRROR = $(".custom-modal .steps[data-index='7'] .panel-option .item.is-selected .swatch .swatch-element.active").attr("data-value");
+
+                  if(value_name_MIRROR == "None"){
+                    value_all_MIRROR = "None"
+                  } else {
+                    value_all_MIRROR = value_name_MIRROR+"/"+value_color_MIRROR;
+                  }
+                  $(".custom-modal .steps[data-index='7'] .Mirror").val(value_all_MIRROR)
+              }
+
+              $(".custom-modal .steps[data-index='5']").on("click",".panel-option li",function() {
+                step.removeClass("active");
+                confirmcolor_TINT();
+                confirmcolor_MIRROR();
+                $(".main-modal .header-modal .prev").attr("data-index", "6");
+                $(".top-sub-navigation .btn").removeClass("active");
+                $(".top-sub-navigation .btn[data-index='6']").addClass("active");                
+                $(".custom-modal .steps[data-index='6']").addClass("active");
+                var varID = $(this).find(".product_variant").val();
+                var price = parseFloat($(this).find(".product_variant").attr("data-price"));
+                
+                if(typeof(varID) != "undefined"){
+                  product_variant_lens_options = varID;
+                } else {
+                  product_variant_lens_options = ""
+                }
+                if(typeof($(this).find(".product_variant").attr("data-price")) != "undefined"){
+                  price_lens_options = price;
+                } else {
+                  price_lens_options = 0
+                }
+
+                get_totalprice();
+              });
+
+              // Step 6
+
+              $(".custom-modal .steps[data-index='6']").on("click",".panel-option .item input[type='radio']",function(e) {  
+                var $this = $(this);
+                if(value_selected == "READERS"){
+                  var value = $(this).val();
+                  var varID = $(this).parents(".item").find(".product_variant").val();
+                  var price = parseFloat($(this).parents(".item").find(".product_variant").attr("data-price"));
+                  if(typeof(varID) != "undefined"){
+                    product_variant_lens_options_TINT = varID;
+                  } else {
+                    product_variant_lens_options_TINT = ""
+                  }
+                  if(typeof($(this).parents(".item").find(".product_variant").attr("data-price")) != "undefined"){
+                    price_lens_options_TINT = price;
+                  } else {
+                    price_lens_options_TINT = 0
+                  }
+                  get_totalprice();
+                  $(".custom-modal .steps[data-index='6'] .Sunglasses-Tint").val(value)
+                  step.removeClass("active");
+                  $(".main-modal .header-modal .prev").attr("data-index", "7");
+                  $(".top-sub-navigation .btn").removeClass("active");
+                  $(".top-sub-navigation .btn[data-index='7']").addClass("active");                
+                  $(".custom-modal .steps[data-index='7']").addClass("active");
+                } else {
+
+                  $(".panel-option .item").removeClass("is-selected");
+                  $(this).parents(".item").addClass("is-selected");
+                  confirmcolor_MIRROR();
+                  var value = $(this).val();
+                  var varID = $(this).parents(".item").find(".product_variant").val();
+                  var price = parseFloat($(this).parents(".item").find(".product_variant").attr("data-price"));
+                  if(typeof(varID) != "undefined"){
+                    product_variant_lens_options_TINT = varID;
+                  } else {
+                    product_variant_lens_options_TINT = ""
+                  }
+                  if(typeof($(this).parents(".item").find(".product_variant").attr("data-price")) != "undefined"){
+                    price_lens_options_TINT = price;
+                  } else {
+                    price_lens_options_TINT = 0
+                  }
+                  console.log("price_lens_options_TINT: "+price_lens_options_TINT);
+                  get_totalprice();
+                  $(".steps[data-index='6'] .swatch li").removeClass("active");
+                  $(this).parents(".item").find(".swatch li:first-child").addClass("active");
+                  if(value == "None"){
+                    $(".confirm-color").hide();
+                    $(".darkness").hide();
+                    $(".custom-modal .steps[data-index='6'] .Sunglasses-Tint").val(value)
+                    $(".custom-modal .steps[data-index='7'] .Mirror").val(value)
+                    $this.parents(".item").find(".div_Addcart").show();
+                  } else {
+                    $(".confirm-color").hide();
+                    $(".darkness").hide();
+                    $(".custom-modal .steps[data-index='6'] .item").find(".div_Addcart").hide();
+                    $(this).parents(".item").find(".confirm-color").show();
+                    $(this).parents(".item").find(".darkness").show(); 
+                    confirmcolor_TINT()            
+                  }
+                }
+              });
+              $(".steps[data-index='6'] .swatch ").on("click","li:not('.darkness')",function(e) {
+                $(".steps[data-index='6'] .swatch li").removeClass("active");
+                var varID = $(this).attr("variant-id");
+                if(typeof(varID) != "undefined"){
+                  product_variant_lens_options_TINT = varID;
+                } else {
+                  product_variant_lens_options_TINT = ""
+                }
+                $(this).addClass("active");
+                confirmcolor_TINT()
+              });
+              $(".swatch .darkness").on("change","select",function() {
+                confirmcolor_TINT()
+              });    
+              $(".confirm-color ").on("click",".btn-confirm-color",function() {
+                confirmcolor_TINT();
+                confirmcolor_MIRROR();
+                step.removeClass("active");
+                $(".confirm-color").hide();
+                $(".darkness").hide();
+                $(".main-modal .header-modal .prev").attr("data-index", "7");
+                $(".top-sub-navigation .btn").removeClass("active");
+                $(".top-sub-navigation .btn[data-index='7']").addClass("active");                
+                $(".custom-modal .steps[data-index='7']").addClass("active");
+              });
+
+              // Step 7
+
+              $(".custom-modal .steps[data-index='7']").on("click",".panel-option .item input[type='radio']",function(e) {  
+                var $this = $(this);
+                $(".panel-option .item").removeClass("is-selected");
+                $(this).parents(".item").addClass("is-selected");
+                confirmcolor_MIRROR();
+                var varID = $(this).parents(".item").find(".product_variant").val();
+                var price = parseFloat($(this).parents(".item").find(".product_variant").attr("data-price"));
+                if(typeof(varID) != "undefined"){
+                  product_variant_lens_options_MIRROR = varID;
+                } else {
+                  product_variant_lens_options_MIRROR = ""
+                }
+                if(typeof($(this).parents(".item").find(".product_variant").attr("data-price")) != "undefined"){
+                  price_lens_options_MIRROR = price;
+                } else {
+                  price_lens_options_MIRROR = 0
+                }
+                console.log("price_lens_options_MIRROR: "+price_lens_options_MIRROR);
+                get_totalprice();
+                var value = $(this).val();
+                $(".steps[data-index='7'] .swatch li").removeClass("active");
+                $(this).parents(".item").find(".swatch li:first-child").addClass("active");
+                if(value == "None"){
+                  $(".custom-modal .steps[data-index='7'] .Mirror").val(value)
+                } else {
+                  confirmcolor_MIRROR();            
+                }
+              });
+
+              $(".steps[data-index='7'] .swatch").on("click","li:not('.add-to-cart')",function(e) {
+                $(".steps[data-index='7'] .swatch li").removeClass("active");
+                var varID = $(this).attr("variant-id");
+                if(typeof(varID) != "undefined"){
+                  product_variant_lens_options_MIRROR = varID;
+                } else {
+                  product_variant_lens_options_MIRROR = ""
+                }
+                $(this).addClass("active");
+                confirmcolor_MIRROR();
+              });
+
+            
+              // cart page 
+              $(".cart-table").on("click",".custom-accordion__title",function() {
+                $(this).toggleClass("open");
+                $(this).next().slideToggle();
+              });
+              $(".upload-file-button #upload_file").change(function(e) {
+                var uploadedFile = URL.createObjectURL(e.target.files[0]);
+                $(".file-uploaded .btn-primary").attr("href", uploadedFile);
+                $(this).parents(".prescription-upload-row").find(".done-steps a").removeAttr("style");
+                $(this).parents(".prescription-upload-row").find(".upload-file-button").hide();
+                $(this).parents(".prescription-upload-row").find(".file-uploaded").show();
+              });
+              $(".file-uploaded .btn-secondary").click(function(e) {
+                $(this).parents(".prescription-upload-row").find("#upload_file").val("")
+                $(this).parents(".prescription-upload-row").find(".done-steps a").css("pointer-events", "none");
+                $(this).parents(".prescription-upload-row").find(".upload-file-button").show();
+              });
+              $(".done-steps a").click(function(e) {
+                step.removeClass("active");
+      
+                if(value_selected == "Single Vision"){
+                  $(".steps[data-index='3'] input[value='Standard']").attr("checked","checked");
+                  $(".main-modal .header-modal h2").text("Lens Material")
+                  $(".main-modal .header-modal .prev").attr("data-index", 4);
+                  $(".top-navigation .item[data-index='1']").addClass("is-selected");
+                  $(".top-navigation .item[data-index='2']").addClass("is-selected");
+                  $(".top-navigation .item[data-index='4']").addClass("active");
+                  $(".custom-modal .steps[data-index='4']").addClass("active");
+                } else {
+                  $(".main-modal .header-modal h2").text("Lens Type")
+                  $(".main-modal .header-modal .prev").attr("data-index", 3);
+                  $(".top-navigation .item[data-index='1']").addClass("is-selected");
+                  $(".top-navigation .item[data-index='2']").addClass("is-selected");
+                  $(".top-navigation .item[data-index='3']").addClass("active");
+                  $(".custom-modal .steps[data-index='3']").addClass("active");
+                } 
+              });             
+          });
+        </script>
+</body>
+</html>

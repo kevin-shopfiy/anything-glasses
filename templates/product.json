@@ -1,0 +1,284 @@
+{
+  "sections": {
+    "product-form": {
+      "type": "template--product",
+      "blocks": {
+        "media": {
+          "type": "media",
+          "settings": {
+            "image_size": "large",
+            "image-display": "thumbnails",
+            "thumbnail_position": "below",
+            "enable_image_zoom": true,
+            "enable_video_loop": false
+          }
+        },
+        "sale_badge": {
+          "type": "sale_badge",
+          "settings": {}
+        },
+        "title": {
+          "type": "title",
+          "settings": {}
+        },
+        "price": {
+          "type": "price",
+          "settings": {
+            "shipping_policy": true,
+            "tax_included": false
+          }
+        },
+        "options": {
+          "type": "options",
+          "settings": {
+            "product_variant_style": "swatches",
+            "thumbnail_changes_variant": false,
+            "hide_soldout_variants": false
+          }
+        },
+        "quantity": {
+          "type": "quantity",
+          "settings": {}
+        },
+        "buy_buttons": {
+          "type": "buy_buttons",
+          "settings": {
+            "show_smart_checkout": true
+          }
+        },
+        "695a82d4-5c88-41e0-9797-aa7b8bd31339": {
+          "type": "local_pickup",
+          "settings": {}
+        },
+        "18c58aeb-aaed-495f-bc50-bc327805b505": {
+          "type": "text-with-icon",
+          "settings": {
+            "icon": "takeaway",
+            "text": "Free shipping",
+            "link": ""
+          }
+        },
+        "fbfe241f-1b44-41cd-ae22-e866bdad9aaf": {
+          "type": "cross-sells",
+          "settings": {
+            "title": "",
+            "cross_sell_product_1": "",
+            "cross_sell_product_2": "",
+            "cross_sell_product_3": "",
+            "cross_sell_bg": "#f8f8f8"
+          }
+        },
+        "4fc5c8ff-de40-4a1e-9237-abd82cb40a7a": {
+          "type": "trust_badges",
+          "settings": {
+            "trust-badge_max_width": 220
+          }
+        }
+      },
+      "block_order": [
+        "media",
+        "sale_badge",
+        "title",
+        "price",
+        "options",
+        "quantity",
+        "buy_buttons",
+        "695a82d4-5c88-41e0-9797-aa7b8bd31339",
+        "18c58aeb-aaed-495f-bc50-bc327805b505",
+        "fbfe241f-1b44-41cd-ae22-e866bdad9aaf",
+        "4fc5c8ff-de40-4a1e-9237-abd82cb40a7a"
+      ],
+      "settings": {
+        "enable_sticky": true,
+        "show_out_of_stock_email": true
+      }
+    },
+    "product-description": {
+      "type": "template--product--description",
+      "settings": {
+        "enable_readmore": false
+      }
+    },
+    "rich-text": {
+      "type": "text--rich-text",
+      "settings": {
+        "colors": "accent",
+        "title": "Welcome to our store",
+        "text": "<p>Use this text block to show store announcements, advertise products and collections, or simply welcome visitors to your store.<\/p>",
+        "button_label": "",
+        "button_link": ""
+      }
+    },
+    "accordion": {
+      "type": "accordion",
+      "blocks": {
+        "16459170895405b858-0": {
+          "type": "tab_content",
+          "settings": {
+            "question": "PLACE YOUR QUESTION OR HEADING HERE",
+            "text": "<p>Here you can place an explanation or answer to the question.<\/p>"
+          }
+        },
+        "16459170895405b858-1": {
+          "type": "tab_content",
+          "settings": {
+            "question": "PLACE YOUR QUESTION OR HEADING HERE",
+            "text": "<p>Here you can place an explanation or answer to the question.<\/p>"
+          }
+        },
+        "16459170895405b858-2": {
+          "type": "tab_content",
+          "settings": {
+            "question": "PLACE YOUR QUESTION OR HEADING HERE",
+            "text": "<p>Here you can place an explanation or answer to the question.<\/p>"
+          }
+        }
+      },
+      "block_order": [
+        "16459170895405b858-0",
+        "16459170895405b858-1",
+        "16459170895405b858-2"
+      ],
+      "settings": {
+        "colors": "accent",
+        "title": "",
+        "faq_icon": "caret"
+      }
+    },
+    "info-columns": {
+      "type": "template--product--info-columns",
+      "blocks": {
+        "164591707082a76d22-0": {
+          "type": "image",
+          "settings": {
+            "title": "TITLE",
+            "text": "Share store details, promotions, or brand content with your customers.",
+            "link": "",
+            "link_text": "Optional link"
+          }
+        },
+        "164591707082a76d22-1": {
+          "type": "image",
+          "settings": {
+            "title": "TITLE",
+            "text": "Share store details, promotions, or brand content with your customers.",
+            "link": "",
+            "link_text": "Optional link"
+          }
+        },
+        "164591707082a76d22-2": {
+          "type": "image",
+          "settings": {
+            "title": "TITLE",
+            "text": "Share store details, promotions, or brand content with your customers.",
+            "link": "",
+            "link_text": "Optional link"
+          }
+        }
+      },
+      "block_order": [
+        "164591707082a76d22-0",
+        "164591707082a76d22-1",
+        "164591707082a76d22-2"
+      ],
+      "settings": {
+        "colors": "white"
+      }
+    },
+    "image-with-text-overlay": {
+      "type": "image--image-with-text-overlay",
+      "settings": {
+        "image_height": "40vw",
+        "bg_image_overlay_opacity": 0,
+        "parallax": true,
+        "title": "Share your story",
+        "text": "Add a large image with text overlay to give focus to your chosen product, collection, or blog post",
+        "colors": "light",
+        "textPosition": "left",
+        "textAlignment": "left",
+        "heading--text-size": 26,
+        "text--text-size": 18,
+        "link": "shopify:\/\/collections\/all",
+        "button_label": "Learn more",
+        "button-text": "#ffffff",
+        "button-background": "#242424"
+      }
+    },
+    "video-hero": {
+      "type": "video--video-hero",
+      "settings": {
+        "url": "https:\/\/www.youtube.com\/watch?v=_9VUPq3SxOc",
+        "desktopHeight": "450",
+        "mobileHeight": "350",
+        "title": "Share your story",
+        "subheading": "Here's your chance to make a great first impression",
+        "textAlignment": "center",
+        "textColor": "#ffffff",
+        "textShadow": false,
+        "heading--text-size": 26,
+        "subheading--text-size": 14,
+        "link": "",
+        "button_label": "",
+        "button-text": "#ffffff",
+        "button-background": "#000000"
+      }
+    },
+    "product-recommendations": {
+      "type": "template--product--recommendations",
+      "blocks": {
+        "product_card_image": {
+          "type": "product_card_image",
+          "settings": {
+            "hover-effect": false,
+            "enable_badges": true
+          }
+        },
+        "product_card_title": {
+          "type": "product_card_title",
+          "settings": {}
+        },
+        "product_card_vendor": {
+          "type": "product_card_vendor",
+          "settings": {}
+        },
+        "product_card_price": {
+          "type": "product_card_price",
+          "settings": {}
+        },
+        "product_card_button": {
+          "type": "product_card_button",
+          "settings": {}
+        }
+      },
+      "block_order": [
+        "product_card_image",
+        "product_card_title",
+        "product_card_vendor",
+        "product_card_price",
+        "product_card_button"
+      ],
+      "settings": {
+        "enable_product_recommendations": true,
+        "product_recommendations_heading": "You may also like"
+      }
+    },
+    "recently-viewed": {
+      "type": "template--product--recently-viewed",
+      "settings": {
+        "enable_recently_viewed": false,
+        "recently_viewed_title": "Recently viewed products"
+      }
+    }
+  },
+  "order": [
+    "product-form",
+    "product-description",
+    "rich-text",
+    "accordion",
+    "info-columns",
+    "image-with-text-overlay",
+    "video-hero",
+    "product-recommendations",
+    "recently-viewed"
+  ]
+}

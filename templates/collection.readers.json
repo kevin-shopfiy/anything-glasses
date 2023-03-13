@@ -1,0 +1,167 @@
+{
+  "wrapper": "div.collection-wrapper.wrapper",
+  "sections": {
+    "image-with-text-overlay": {
+      "type": "image--image-with-text-overlay",
+      "settings": {
+        "image": "shopify:\/\/shop_images\/falleyeglasses-mainbanner.jpg",
+        "image_height": "30vw",
+        "bg_image_overlay_opacity": 0,
+        "parallax": true,
+        "title": "",
+        "text": "",
+        "colors": "light",
+        "textPosition": "center",
+        "textAlignment": "center",
+        "heading--text-size": 26,
+        "text--text-size": 18,
+        "link": "",
+        "button_label": "",
+        "button-text": "#ffffff",
+        "button-background": "#000000"
+      }
+    },
+    "collection-header": {
+      "type": "template--collection--header",
+      "disabled": true,
+      "settings": {}
+    },
+    "rich-text": {
+      "type": "text--rich-text",
+      "disabled": true,
+      "settings": {
+        "colors": "white",
+        "title": "",
+        "text": "",
+        "button_label": "",
+        "button_link": ""
+      }
+    },
+    "filtering": {
+      "type": "main-collection-filtering",
+      "blocks": {
+        "9a61e16d-8210-4071-af4e-383d749847a5": {
+          "type": "title",
+          "disabled": true,
+          "settings": {}
+        },
+        "cc65f712-6e6c-43a3-bee0-f94976022411": {
+          "type": "description",
+          "settings": {}
+        }
+      },
+      "block_order": [
+        "9a61e16d-8210-4071-af4e-383d749847a5",
+        "cc65f712-6e6c-43a3-bee0-f94976022411"
+      ],
+      "settings": {
+        "desktop_position": "topbar",
+        "enable_filtering": true,
+        "enable_sorting": true
+      }
+    },
+    "product-grid": {
+      "type": "template--collection",
+      "blocks": {
+        "product_card_image": {
+          "type": "product_card_image",
+          "settings": {
+            "hover-effect": false,
+            "enable_badges": true
+          }
+        },
+        "product_card_title": {
+          "type": "product_card_title",
+          "settings": {}
+        },
+        "product_card_price": {
+          "type": "product_card_price",
+          "settings": {}
+        },
+        "product_card_button": {
+          "type": "product_card_button",
+          "disabled": true,
+          "settings": {}
+        }
+      },
+      "block_order": [
+        "product_card_image",
+        "product_card_title",
+        "product_card_price",
+        "product_card_button"
+      ],
+      "settings": {
+        "desktop-products-per-row": 5,
+        "tablet-products-per-row": 2,
+        "mobile-products-per-row": 1,
+        "collection-products-per-page": 5,
+        "pagination_options": "pagination_default"
+      }
+    },
+    "image-with-text": {
+      "type": "image--image-with-text",
+      "settings": {
+        "colors": "white",
+        "image": "shopify:\/\/shop_images\/falleyeglasses-mainbanner.jpg",
+        "text_overlapping_image": true,
+        "section-width": "full",
+        "layout": "left",
+        "text_alignment": "left",
+        "title": "Share brand or product details",
+        "text": "<p>Pair large text with an image to give focus to your chosen product, collection, or blog post. Add details on availability, style, or even provide a review.<\/p>",
+        "button_label": "Learn more",
+        "button_link": "shopify:\/\/collections"
+      }
+    },
+    "blog-posts": {
+      "type": "blog--blog-posts",
+      "blocks": {
+        "9b6524c6-3aa1-42cc-b7cc-a0aadf76fe9c": {
+          "type": "article",
+          "settings": {
+            "blog_post_1": "blog\/find-your-reading-power",
+            "blog_post_2": "blog\/reading-sunglasses-vs-bifocal-glasses",
+            "blog_post_3": "blog\/tips-for-adjusting-to-new-eyewear",
+            "blog_post_4": ""
+          }
+        }
+      },
+      "block_order": [
+        "9b6524c6-3aa1-42cc-b7cc-a0aadf76fe9c"
+      ],
+      "settings": {
+        "colors": "accent",
+        "title": "Feature Contents",
+        "richtext": "<p>Shop a wide selection of men's and women's affordable <em>reading glasses<\/em>, bifocals, & computer glasses in a variety of powers.<\/p>",
+        "blog_show_date": false,
+        "post_limit": 3
+      }
+    },
+    "16641804353f5ca4fc": {
+      "type": "advanced-layout--custom-html",
+      "blocks": {
+        "166418043559b3b24a-0": {
+          "type": "html",
+          "settings": {
+            "code": "<div style=\"text-align:center; padding: 30px 0;\"><div class=\"wrapper-padded\">\n<h2 class=\"homepage-sections--title\">Use HTML to format your text so it can be easily read.<\/h2>This text can be used to share information about your brand with customers.<\/div><\/div>",
+            "width": "100%"
+          }
+        }
+      },
+      "block_order": [
+        "166418043559b3b24a-0"
+      ],
+      "settings": {}
+    }
+  },
+  "order": [
+    "image-with-text-overlay",
+    "collection-header",
+    "rich-text",
+    "filtering",
+    "product-grid",
+    "image-with-text",
+    "blog-posts",
+    "16641804353f5ca4fc"
+  ]
+}
